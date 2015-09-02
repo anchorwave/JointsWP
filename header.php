@@ -21,7 +21,7 @@
 			<meta name="msapplication-TileColor" content="#f01d4f">
 			<meta name="msapplication-TileImage" content="<?php echo get_template_directory_uri(); ?>/assets/images/win8-tile-icon.png">
 	    		<meta name="theme-color" content="#121212">
-	    	<?php } ?>
+    	<?php } ?>
 
 		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
 
@@ -39,7 +39,12 @@
 					<header class="header" role="banner">
 							
 						 <!-- This navs will be applied to the topbar, above all content 
-							  To see additional nav styles, visit the /parts directory -->
+						 To see additional nav styles, visit the /parts directory -->
 						 <?php get_template_part( 'parts/nav', 'top-offcanvas' ); ?>
 								 	
 					</header> <!-- end .header -->
+
+<?php for ($i=0; $i < 4; $i++) { 
+	awt_super_grid("1,2,3", "1,4,1", "5,6", "blahty", array("special"));
+	echo PHP_EOL;
+}

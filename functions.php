@@ -1,4 +1,10 @@
 <?php
+// Helper Functions
+require_once(get_template_directory().'/assets/functions/helper-functions.php'); 
+
+// Wordpress Modifications
+require_once(get_template_directory().'/assets/functions/mod-wordpress.php'); 
+
 // Theme support options
 require_once(get_template_directory().'/assets/functions/theme-support.php'); 
 
