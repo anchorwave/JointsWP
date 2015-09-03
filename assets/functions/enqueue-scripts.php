@@ -7,8 +7,13 @@ function joints_scripts_and_styles() {
 	// Removes WP version of jQuery
 	wp_deregister_script('jquery');
 	
-	// Loads jQuery from bower_components
+    // Loads jQuery from bower_components
     wp_enqueue_script( 'jquery', get_template_directory_uri() . '/bower_components/foundation/js/vendor/jquery.js', array(), '2.1.3', true );
+
+    //Loads up that slick plugin thing
+    wp_enqueue_script( 'slick', get_template_directory_uri() . '/bower_components/slick-carousel/slick/slick.min.js', array('jquery'), '', true );
+    wp_enqueue_style( 'slick', get_template_directory_uri() . '/bower_components/slick-carousel/slick/slick.css');
+    wp_enqueue_style( 'slick-theme', get_template_directory_uri() . '/bower_components/slick-carousel/slick/slick-theme.css');
     
     // Modernizr from bower_components
     wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/bower_components/foundation/js/vendor/modernizr.js', array(), '2.8.3', true );

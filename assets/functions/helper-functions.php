@@ -35,49 +35,30 @@ function custom_excerpt($content, $numwords, $append = "…"){
  * Super Grid
  * @param $small size of small columns, accepts comma separated list
  **/
-function get_awt_super_grid( $small = false, $medium = false, $large = false, $group = "default", $addclass = array() ){
+function get_super_grid( $small = false, $medium = false, $large = false, $group = "default", $addclass = array() ){
 
 	// caching/tracking variables
 	static $count = array();
 	static $columns = array();
-	static $class = array();
+	// static $class = array();
 
 	if ( !isset( $count[$group] ) ){
 
 		//start count for this group
 		$count[$group] = 0;
-  
-  		//cache all columns in this group
-		$columns[$group] = array(
-			"s" => explode(',', $small),
-			"m" => explode(',', $medium),
-			"l" => explode(',', $large)
-		);
-
-		//trim all column numbers for this group
-		array_walk_recursive( $columns[$group], function(&$a, $i){$a = trim($a);} );
-
-		if ( !is_array($addclass) ){
-			$class[$group] = explode(' ', $addclass);
-		}
 
 	}
-	
-	$classes = array_merge( array( "columns" ), $class[$group] );
-
+	$classes[] = "columns";
 	if ($small){
-		$index = $count[$group] % count( $columns[$group]['s'] );
-		$classes[] = "small-{$columns[$group]['s'][$index]}";
+		$classes[] = "small-{$small}";
 	}
 
 	if ($medium){
-		$index = $count[$group] % count( $columns[$group]['m'] );
-		$classes[] = "medium-{$columns[$group]['m'][$index]}";
+		$classes[] = "medium-{$medium}";
 	}
 
 	if ($large){
-		$index = $count[$group] % count( $columns[$group]['l'] );
-		$classes[] = "large-{$columns[$group]['l'][$index]}";
+		$classes[] = "large-{$large}";
 	}
 
 	$count[$group]++;
@@ -85,8 +66,8 @@ function get_awt_super_grid( $small = false, $medium = false, $large = false, $g
 	return implode(" ", $classes);
 
 }
-function awt_super_grid( $small = null, $medium = null, $large = null, $group = "default", $classes = array() ){
-    echo get_awt_super_grid($small, $medium, $large, $group, $classes);
+function super_grid( $small = null, $medium = null, $large = null, $group = "default", $classes = array() ){
+    echo get_super_grid($small, $medium, $large, $group, $classes);
 }
 
 /**
@@ -96,7 +77,7 @@ function awt_super_grid( $small = null, $medium = null, $large = null, $group = 
  * @param (optional) int $offset 
  * @return bool
  */
-function awt_true_every($times, $group = "default", $offset = 0){
+function true_every($times, $group = "default", $offset = 0){
   static $count = array();
   if (!isset($count[$group])) $count[$group] = 0;
   $times = intval($times);
@@ -115,7 +96,7 @@ function awt_true_every($times, $group = "default", $offset = 0){
  * @param string $uniqueInstance, default "default" - unique string for each instance (if function is used on the same page twice)
  * EG: <div class="general-class <?php cycle_classes(array("first-block", "", "", "", "fifth-block"), "unique name for this instance"); ?>">
  **/
-function awt_cycle_classes( array $classes, $uniqueInstance = "default" ){
+function cycle_classes( array $classes, $uniqueInstance = "default" ){
   static $n = array(); 
   $count = count($classes);
   $i = $n[$uniqueInstance] % $count;
@@ -130,10 +111,10 @@ function awt_cycle_classes( array $classes, $uniqueInstance = "default" ){
  * @param $img an image OBJECT returned from get_field() [advanced custom fields]
  * @return $html, string containing html -- background_data_html() is same but echos
  */
-function awt_background_data_html($img = null){
-  echo awt_get_background_data_html($img);
+function background_data_html($img = null){
+  echo get_background_data_html($img);
 }
-function awt_get_background_data_html($img = null){
+function get_background_data_html($img = null){
   $html = '';
   if (isset($img['url'])){
     $html .= " data-fullbgurl='{$img['url']}'";
@@ -160,4 +141,31 @@ function phone_number_link( $phonenumber = "" ){
     $phonenumber = "";
   }
   return $phonenumber;
+}
+
+
+/**
+ * Shortcut to echo featured image source
+ * @return void
+ */
+function the_featured_image($post_id = null, $size = "full") {
+  echo get_featured_image($post_id, $size);
+}
+function get_featured_image($post_id = null, $size = "full") {
+    if ($post_id = null) {
+       $post_id = get_the_id();
+    }
+    if ( $src = get_featured_image_src($post_id, $size) ){
+        return "<img src='" . $src . "' alt='' />";
+    }
+    return '';
+}
+function get_featured_image_src($post_id = null, $size = "full") {
+  if ($post_id === null){
+    global $post;
+    $post_id = $post->ID;
+  }
+  $thumb_id = get_post_thumbnail_id( $post_id );
+  $src = wp_get_attachment_image_src( $thumb_id, $size );
+  return $src[0];
 }

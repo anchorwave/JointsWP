@@ -18,7 +18,8 @@
     "tests"
   ],
   "dependencies": {
-    "foundation": "~5.5.1"
+    "foundation": "~5.5.1",
+    "slick-carousel": "~1.5.8"
   },
   "resolutions": {
     "foundation": "~5.5.1"

@@ -43,8 +43,3 @@
 						 <?php get_template_part( 'parts/nav', 'top-offcanvas' ); ?>
 								 	
 					</header> <!-- end .header -->
-
-<?php for ($i=0; $i < 4; $i++) { 
-	awt_super_grid("1,2,3", "1,4,1", "5,6", "blahty", array("special"));
-	echo PHP_EOL;
-}
